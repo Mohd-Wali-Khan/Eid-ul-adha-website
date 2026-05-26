@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Eid ul-Adha | The Festival of Sacrifice | Cinematic Luxury Experience</title>
+    <!-- Google Fonts: Elegant English & Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #070707;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: #e6e6e6;
+        }
+        .arabic-font {
+            font-family: 'Amiri', 'Scheherazade New', serif;
+        }
+        .gold-text {
+            background: linear-gradient(135deg, #d4a94d, #f5d77e, #b67f2e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .glass-card {
+            background: rgba(10, 10, 15, 0.55);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 169, 77, 0.3);
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -15px rgba(0,0,0,0.5), 0 0 15px rgba(212,169,77,0.1);
+            transition: all 0.3s ease;
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 28px rgba(212, 169, 77, 0.5);
+            border-color: rgba(212, 169, 77, 0.8);
+            transform: translateY(-5px);
+        }
+        .cursive-heading {
+            font-family: 'Cinzel', 'Playfair Display', serif;
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4a94d;
+            border-radius: 10px;
+        }
+        canvas#particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .mouse-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212,169,77,0.15) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 20;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+        .lantern-float {
+            animation: floatGlow 5s infinite ease-in-out;
+        }
+        @keyframes floatGlow {
+            0% { transform: translateY(0px); filter: drop-shadow(0 0 5px #ffb74d);}
+            50% { transform: translateY(-20px); filter: drop-shadow(0 0 22px #ffb74d);}
+            100% { transform: translateY(0px); filter: drop-shadow(0 0 5px #ffb74d);}
+        }
+        .cinematic-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+        }
+        .cinematic-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .islamic-pattern-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.05'%3E%3Cpath fill='%23d4a94d' d='M50,10 L61,30 L83,35 L68,51 L72,73 L50,63 L28,73 L32,51 L17,35 L39,30 Z'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 70px;
+        }
+        .btn-gold {
+            background: linear-gradient(95deg, rgba(212,169,77,0.15) 0%, rgba(212,169,77,0.4) 100%);
+            border: 1.5px solid #d4a94d;
+            transition: 0.4s;
+        }
+        .btn-gold:hover {
+            background: rgba(212,169,77,0.6);
+            box-shadow: 0 0 18px #d4a94d;
+            transform: scale(1.03);
+        }
+        
+        /* Realistic Camel Caravan Container */
+        .camel-caravan-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            border-radius: 48px;
+            overflow: hidden;
+            margin: 60px 0;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.8);
+            background: linear-gradient(180deg, #1f180d 0%, #0e0b03 100%);
+            cursor: pointer;
+        }
+        #camelCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        .silk-glow {
+            text-shadow: 0 0 15px rgba(212,169,77,0.6);
+        }
+        .dua-card {
+            transition: all 0.5s ease;
+        }
+        .dua-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(212,169,77,0.3);
+        }
+        .premium-eid-card {
+            background: linear-gradient(145deg, #1f1a10 0%, #0b0802 100%);
+            border: 1px solid rgba(212,169,77,0.6);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .premium-eid-card:hover {
+            box-shadow: 0 30px 40px -20px rgba(212,169,77,0.4);
+            transform: translateY(-8px);
+        }
+        
+        @media (max-width: 768px) {
+            .camel-caravan-container { height: 280px; border-radius: 28px; margin: 30px 0; }
+            .glass-card { padding: 1.5rem; }
+            .text-5xl { font-size: 2rem; }
+            .text-7xl { font-size: 3rem; }
+            .py-28 { padding-top: 3rem; padding-bottom: 3rem; }
+        }
+        @keyframes shine {
+    0% {
+        transform: translateX(-100%) rotate(12deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(12deg);
+    }
+}
+#eidArabicText{
+    color:#f5d77e;
+    text-shadow:
+        0 0 10px rgba(212,169,77,0.7),
+        0 0 20px rgba(212,169,77,0.5);
+    font-family:'Amiri','Scheherazade New',serif;
+    direction: rtl;
+}
+    </style>
+</head>
+<body class="overflow-x-hidden bg-black">
+
+    <div class="mouse-glow" id="mouseGlow"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Loading Screen -->
+    <div id="loader" class="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-black transition-all duration-1000">
+        <div class="text-center">
+            <div class="arabic-font text-7xl gold-text mb-6 animate-pulse">﷽</div>
+            <div class="w-32 h-0.5 bg-gradient-to-r from-transparent via-[#d4a94d] to-transparent mb-6"></div>
+            <div class="text-[#d4a94d] tracking-[0.2em] text-sm font-light">THE FESTIVAL OF SACRIFICE</div>
+            <div class="mt-4 text-xs text-[#d4a94d]/70">Eid ul-Adha Mubarak</div>
+        </div>
+    </div>
+
+    <!-- Premium Sticky Navbar -->
+    <nav class="fixed top-0 w-full z-50 bg-black/30 backdrop-blur-xl border-b border-[#d4a94d]/30 py-4 px-6 md:px-12 transition-all duration-300">
+        <div class="flex justify-between items-center">
+            <div class="text-2xl md:text-3xl arabic-font gold-text tracking-wide">عيد الأضحى</div>
+            <div class="hidden md:flex gap-8 text-sm font-light tracking-wide">
+                <a href="#" class="hover:text-[#d4a94d] transition duration-300"></a>
+                <a href="#" class="hover:text-[#d4a94d] transition duration-300"></a>
+                <a href="#" class="hover:text-[#d4a94d] transition duration-300"></a>
+                <a href="#" class="hover:text-[#d4a94d] transition duration-300"></a>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-[#d4a94d]/20 border border-[#d4a94d] flex items-center justify-center text-xs">✨</div>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
+        <!-- HERO SECTION -->
+        <section class="relative h-screen w-full overflow-hidden flex items-center justify-center text-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#070707] via-[#1f1405]/80 to-[#0a0702] opacity-95"></div>
+            <div class="absolute inset-0 islamic-pattern-overlay opacity-20"></div>
+            <div class="relative z-30 max-w-5xl px-4">
+                <h1 class="text-4xl sm:text-5xl md:text-8xl font-bold cursive-heading gold-text animate-[fadeInUp_1s_ease] tracking-tight">Eid ul-Adha Mubarak</h1>
+                <div class="arabic-font text-3xl sm:text-5xl md:text-7xl mt-5 gold-text opacity-95 drop-shadow-2xl">عيد الأضحى مبارك</div>
+                <p class="text-lg md:text-2xl mt-6 text-[#f2d6a2] font-light max-w-2xl mx-auto leading-relaxed">A celebration of sacrifice, faith, devotion, and boundless compassion.</p>
+                <button id="exploreBtn" class="mt-12 px-10 py-4 btn-gold rounded-full text-[#d4a94d] font-semibold tracking-wider transition-all duration-500 backdrop-blur-md text-lg">✨ Journey of Ibrahim ✨</button>
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer" id="scrollIndicator">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#d4a94d" stroke-width="1.5"><path d="M12 5v14m0 0l-5-5m5 5l5-5"/></svg>
+                </div>
+            </div>
+            <div class="lantern-float absolute top-[15%] left-[8%] text-5xl opacity-60">🏮</div>
+            <div class="lantern-float absolute bottom-[20%] right-[10%] text-4xl opacity-50" style="animation-delay: 1.5s;">🏮</div>
+        </section>
+
+        <!-- SECTION 1: WHAT IS EID UL-ADHA? -->
+        <section class="py-28 px-6 md:px-16 relative islamic-pattern-overlay">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center cinematic-reveal">
+                    <span class="gold-text text-sm tracking-[0.2em]">SACRED TRADITION</span>
+                    <h2 class="text-4xl md:text-6xl cursive-heading gold-text mt-3">The Essence of Devotion</h2>
+                    <div class="w-28 h-[2px] bg-gradient-to-r from-transparent via-[#d4a94d] to-transparent mx-auto my-6"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 mt-16">
+                    <div class="glass-card p-8 cinematic-reveal">
+                        <div class="arabic-font text-3xl gold-text mb-5">﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾</div>
+                        <p class="text-gray-300 leading-loose text-lg">Eid ul-Adha, the "Festival of Sacrifice," honors Prophet Ibrahim's (AS) absolute submission to Allah. When commanded to sacrifice his son, his unwavering faith transformed into divine mercy — a ram replaced Ismail (AS).</p>
+                    </div>
+                    <div class="glass-card p-8 cinematic-reveal">
+                        <div class="flex gap-5">
+                            <span class="text-5xl">🤍</span>
+                            <div><h3 class="text-2xl gold-text font-bold">Spiritual Lesson</h3><p class="text-gray-300 mt-3 text-lg">True sacrifice isn't about loss, but surrendering what we hold dearest for Allah's pleasure.</p></div>
+                        </div>
+                        <div class="mt-8 p-5 border-l-4 border-[#d4a94d] bg-black/30 rounded-r-2xl"><p class="italic text-[#f2d6a2] text-lg">"Indeed, Allah is with the patient." (Qur'an 2:153)</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: REALISTIC CAMEL CARAVAN EFFECT -->
+        <section class="py-28 bg-black/80 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('https://images.pexels.com/photos/1308940/desert-dunes-sand-1308940.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-fixed opacity-10"></div>
+            <div class="max-w-6xl mx-auto px-6 relative z-10">
+                <h2 class="text-5xl md:text-7xl cursive-heading gold-text text-center cinematic-reveal">Story of Ibrahim (AS)</h2>
+                
+                <!-- Realistic Camel Caravan Animation -->
+                <div class="camel-caravan-container cinematic-reveal" id="camelTrigger">
+                    <canvas id="camelCanvas" width="1200" height="450"></canvas>
+                </div>
+                
+                <div class="space-y-28 mt-8">
+                    <div class="glass-card p-10 cinematic-reveal text-center">
+                        <span class="text-6xl block mb-5">🌙✨</span>
+                        <h3 class="text-3xl gold-text mb-4">The Divine Vision</h3>
+                        <p class="text-gray-200 text-lg max-w-3xl mx-auto">Prophet Ibrahim saw a recurring dream instructing him to sacrifice his son. In prophetic tradition, dreams of prophets are revelation.</p>
+                    </div>
+                    <div class="glass-card p-10 cinematic-reveal text-center">
+                        <span class="text-6xl block mb-5">🕊️💬</span>
+                        <h3 class="text-3xl gold-text mb-4">The Conversation with Ismail</h3>
+                        <p class="text-gray-200 text-lg max-w-3xl mx-auto">"O my father, do as you are commanded. You will find me, insha'Allah, among the patient." A moment of absolute devotion.</p>
+                    </div>
+                    <div class="glass-card p-10 cinematic-reveal text-center">
+                        <span class="text-6xl block mb-5">🐏🤲</span>
+                        <h3 class="text-3xl gold-text mb-4">The Miracle of Sacrifice</h3>
+                        <p class="text-gray-200 text-lg max-w-3xl mx-auto">As Ibrahim placed the knife, Allah replaced his son with a magnificent ram. Willingness and faith are more precious than blood.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: QURBANI EXPLAINED -->
+        <section id="nextSection" class="py-28 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center cinematic-reveal"><h2 class="text-4xl md:text-6xl cursive-heading gold-text">Qurbani: The Act of Giving</h2><p class="mt-5 text-[#cfd8dc] text-xl max-w-3xl mx-auto">One third for family, one third for friends, one third for the needy.</p></div>
+                <div class="grid md:grid-cols-3 gap-8 mt-20">
+                    <div class="glass-card p-8 text-center glow-hover"><div class="text-6xl mb-5">❤️‍🔥</div><h3 class="text-2xl gold-text mb-3">Faith</h3><p class="text-gray-300">Strengthening trust in Allah through sincere sacrifice.</p></div>
+                    <div class="glass-card p-8 text-center glow-hover"><div class="text-6xl mb-5">🍖🍛</div><h3 class="text-2xl gold-text mb-3">Charity</h3><p class="text-gray-300">Feeding the less fortunate, spreading joy and nourishment.</p></div>
+                    <div class="glass-card p-8 text-center glow-hover"><div class="text-6xl mb-5">🤝🌍</div><h3 class="text-2xl gold-text mb-3">Unity</h3><p class="text-gray-300">Global Muslim brotherhood, compassion, and shared remembrance.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: DUA SLIDER -->
+        <section class="py-32 relative overflow-hidden">
+            <div class="absolute inset-0 islamic-pattern-overlay opacity-10"></div>
+            <div class="relative z-20 max-w-4xl mx-auto text-center px-6">
+                <div class="glass-card py-16 px-8 border border-[#d4a94d]/50 dua-card">
+                    <h2 class="text-4xl md:text-5xl gold-text cursive-heading mb-4">Blessings & Supplications</h2>
+                    <div id="duaContainer" class="transition-all duration-500 min-h-[380px] flex flex-col justify-center">
+                        <div class="arabic-font text-3xl md:text-5xl gold-text mb-6 leading-relaxed" id="duaArabic">تَقَبَّلَ اللَّهُ مِنَّا وَمِنكُم</div>
+                        <div class="text-xl md:text-2xl text-[#f2d6a2] font-light italic mb-4" id="duaTransliteration">Taqabbal Allahu minna wa minkum</div>
+                        <div class="text-gray-300 max-w-xl mx-auto leading-relaxed text-lg" id="duaTranslation">May Allah accept (this worship) from us and from you.</div>
+                    </div>
+                    <div class="flex justify-center gap-6 mt-12">
+                        <button id="prevDua" class="px-6 py-2 rounded-full border border-[#d4a94d] text-[#d4a94d] hover:bg-[#d4a94d]/20 transition">⟵ Previous</button>
+                        <button id="nextDua" class="px-6 py-2 rounded-full border border-[#d4a94d] text-[#d4a94d] hover:bg-[#d4a94d]/20 transition">Next ⟶</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: PREMIUM EID CARD GENERATOR -->
+        <section class="py-28 bg-black/90">
+            <div class="max-w-2xl mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl gold-text cursive-heading">💌 Personalized Eid Card</h2>
+                <div class="glass-card p-10 mt-10">
+                    <input type="text" id="userName" placeholder="Enter your blessed name..." class="w-full p-4 rounded-2xl bg-black/60 border border-[#d4a94d] text-[#f2d6a2] focus:outline-none focus:ring-2 focus:ring-[#d4a94d] text-center text-lg">
+                    <textarea id="customMessage" rows="2" placeholder="  May Allah bless you and your family." class="w-full mt-4 p-4 rounded-2xl bg-black/60 border border-[#d4a94d] text-[#f2d6a2] focus:outline-none focus:ring-2 focus:ring-[#d4a94d] text-center"></textarea>
+                    <div class="flex gap-4 justify-center mt-6">
+                        <select id="cardStyle" class="bg-black/60 border border-[#d4a94d] rounded-full px-4 py-2 text-gold-text">
+                            <option value="gold">Golden Classic</option>
+                            <option value="emerald">Emerald Blessing</option>
+                            <option value="ruby">Ruby Devotion</option>
+                        </select>
+                       <button id="generateCardBtn"
+class="btn-gold rounded-full px-10 py-3 black-text transition-all duration-300 text-lg font-medium relative overflow-hidden group">
+
+    <span class="relative z-10 flex items-center gap-3">
+        ✨ Generate Card ✨
+    </span>
+
+    <!-- Premium Shine Effect -->
+    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700">
+        <div class="absolute top-0 -left-full w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-12 animate-[shine_2s_linear_infinite]"></div>
+    </div>
+
+</button>
+                    </div>
+                    <div id="generatedCard" class="mt-10 p-8 rounded-2xl premium-eid-card hidden transition-all duration-500 relative overflow-hidden">
+                       <div class="relative z-10 flex flex-col items-center justify-center min-h-[320px]">
+
+    <!-- Default Empty State -->
+    <div id="emptyCardState" class="text-center transition-all duration-500">
+        <div class="text-7xl mb-5 animate-pulse">✨</div>
+
+        <h3 class="text-3xl md:text-4xl gold-text cursive-heading mb-4">
+            Generate Your Premium Eid Card
+        </h3>
+
+        <p class="text-[#f2d6a2] max-w-md mx-auto leading-relaxed text-lg">
+            Enter your blessed name and create a luxurious cinematic Eid ul-Adha greeting card filled with prayers, elegance, and نور.
+        </p>
+
+        <div class="mt-8 flex justify-center gap-4 text-4xl opacity-80">
+            🌙 🏮 🕋 🐏
+        </div>
+    </div>
+
+    <!-- Generated Card Content -->
+   <div id="actualCardContent"
+class="hidden text-center transition-all duration-700 bg-black rounded-3xl p-8">
+     
+<div id="eidArabicText"
+class="arabic-font text-5xl md:text-6xl silk-glow mb-4">
+    عيد مبارك
+</div>
+
+        <div class="text-3xl mt-3 text-[#d4a94d] font-bold" id="cardUserNameDisplay">
+            Beloved Guest
+        </div>
+
+        <div class="text-xl mt-5 text-[#f2d6a2] font-light leading-relaxed max-w-lg mx-auto"
+             id="cardMessageDisplay">
+            May Allah bless you and your family.
+        </div>
+
+        <div class="mt-6 flex justify-center gap-4 text-3xl">
+            🕋 ✨ 🐏
+        </div>
+
+        <button id="downloadCard"
+            class="mt-8 text-sm border border-[#d4a94d] px-6 py-2 rounded-full gold-text hover:bg-[#d4a94d]/20 transition">
+            📸 Save as Image
+        </button>
+    </div>
+
+</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t border-[#d4a94d]/30 py-12 text-center text-gray-400 text-sm">
+            <div class="text-4xl mb-4 inline-block">🌙</div>
+            <p> With warm wishes from NafeesTech / dev_N_tech & Team 💻❤️
+Celebrating faith, sacrifice, unity, and togetherness this Eid. 🌙🕌</p>
+        </footer>
+    </main>
+
+    <script>
+        // Smooth Scroll
+        const lenis = new Lenis({ duration: 1.2 });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 1000);
+            }, 900);
+        });
+
+        // Scroll Reveal
+        const revealItems = document.querySelectorAll('.cinematic-reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.2 });
+        revealItems.forEach(el => revealObserver.observe(el));
+
+        document.getElementById('exploreBtn')?.addEventListener('click', () => lenis.scrollTo('#camelTrigger'));
+        document.getElementById('scrollIndicator')?.addEventListener('click', () => lenis.scrollTo('#camelTrigger'));
+
+        // ========== REALISTIC CAMEL CARAVAN EFFECT ==========
+        const camelCanvas = document.getElementById('camelCanvas');
+        let ctx = camelCanvas.getContext('2d');
+        let cWidth = camelCanvas.clientWidth;
+        let cHeight = camelCanvas.clientHeight;
+        let camelX = -150;
+        let caravanPlaying = false;
+        let caravanFinished = false;
+        let legSwing = 0;
+        let dustParticles = [];
+
+        function resizeCamelCanvas() {
+            cWidth = camelCanvas.parentElement.clientWidth;
+            cHeight = camelCanvas.parentElement.clientHeight;
+            camelCanvas.width = cWidth;
+            camelCanvas.height = cHeight;
+            drawDesertBase();
+        }
+
+        function drawDesertBase() {
+            if (!ctx) return;
+            // Sky gradient
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, cHeight * 0.6);
+            skyGrad.addColorStop(0, '#ff9a4a');
+            skyGrad.addColorStop(0.5, '#e87a2a');
+            skyGrad.addColorStop(1, '#b85a1a');
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, cWidth, cHeight);
+            
+            // Sun
+            ctx.beginPath();
+            ctx.arc(cWidth - 60, 55, 35, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffdd88';
+            ctx.fill();
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#ffaa44';
+            
+            // Desert sand
+            const grad = ctx.createLinearGradient(0, cHeight * 0.5, 0, cHeight);
+            grad.addColorStop(0, '#c98a3e');
+            grad.addColorStop(1, '#8a5a2a');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, cHeight * 0.55, cWidth, cHeight * 0.45);
+            
+            // Dunes
+            ctx.beginPath();
+            ctx.moveTo(0, cHeight * 0.65);
+            ctx.quadraticCurveTo(cWidth * 0.3, cHeight * 0.55, cWidth * 0.5, cHeight * 0.68);
+            ctx.quadraticCurveTo(cWidth * 0.7, cHeight * 0.72, cWidth, cHeight * 0.62);
+            ctx.lineTo(cWidth, cHeight);
+            ctx.lineTo(0, cHeight);
+            ctx.fillStyle = '#b87333';
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.moveTo(0, cHeight * 0.75);
+            ctx.quadraticCurveTo(cWidth * 0.4, cHeight * 0.68, cWidth * 0.8, cHeight * 0.78);
+            ctx.lineTo(cWidth, cHeight);
+            ctx.lineTo(0, cHeight);
+            ctx.fillStyle = '#9a6a3a';
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
+        }
+
+        function drawRealisticCamel(x, legAngle) {
+            if (!ctx) return;
+            ctx.save();
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "rgba(0,0,0,0.5)";
+            
+            const scaleX = 1;
+            const scaleY = 1;
+            const baseY = cHeight * 0.72;
+            
+            // Body
+            ctx.fillStyle = '#c9a87c';
+            ctx.beginPath();
+            ctx.ellipse(x + 35, baseY - 12, 25, 18, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Hump
+            ctx.beginPath();
+            ctx.ellipse(x + 35, baseY - 25, 15, 12, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Neck
+            ctx.fillStyle = '#b8925e';
+            ctx.beginPath();
+            ctx.moveTo(x + 50, baseY - 18);
+            ctx.lineTo(x + 65, baseY - 38);
+            ctx.lineTo(x + 60, baseY - 42);
+            ctx.lineTo(x + 45, baseY - 22);
+            ctx.fill();
+            
+            // Head
+            ctx.fillStyle = '#c9a87c';
+            ctx.beginPath();
+            ctx.ellipse(x + 65, baseY - 40, 12, 10, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Ear
+            ctx.fillStyle = '#a0784a';
+            ctx.beginPath();
+            ctx.moveTo(x + 72, baseY - 48);
+            ctx.lineTo(x + 78, baseY - 52);
+            ctx.lineTo(x + 72, baseY - 44);
+            ctx.fill();
+            
+            // Eye
+            ctx.fillStyle = '#2a1a0a';
+            ctx.beginPath();
+            ctx.arc(x + 70, baseY - 42, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Legs with walking animation
+            ctx.fillStyle = '#b8925e';
+            const legOffset = Math.sin(legAngle) * 6;
+            // Front left leg
+            ctx.fillRect(x + 18, baseY - 10, 8, 18 + legOffset);
+            // Front right leg
+            ctx.fillRect(x + 28, baseY - 10, 8, 18 - legOffset);
+            // Back left leg
+            ctx.fillRect(x + 45, baseY - 10, 8, 18 - legOffset);
+            // Back right leg
+            ctx.fillRect(x + 55, baseY - 10, 8, 18 + legOffset);
+            
+            // Tail
+            ctx.beginPath();
+            ctx.moveTo(x + 15, baseY - 18);
+            ctx.quadraticCurveTo(x + 5, baseY - 12, x + 8, baseY - 5);
+            ctx.fillStyle = '#8a6a3a';
+            ctx.fill();
+            
+            ctx.restore();
+        }
+
+        function drawCamelCaravan() {
+            if (!ctx) return;
+            drawDesertBase();
+            
+            // Draw 3 camels with different positions
+            drawRealisticCamel(camelX, legSwing);
+            drawRealisticCamel(camelX + 75, legSwing + 1);
+            drawRealisticCamel(camelX + 140, legSwing + 0.5);
+            
+            // Draw dust particles
+            dustParticles.forEach((p, i) => {
+                ctx.fillStyle = `rgba(200, 140, 70, ${p.life})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+                p.x -= 2;
+                p.life -= 0.02;
+                if (p.life <= 0 || p.x < 0) dustParticles.splice(i, 1);
+            });
+            
+            // Add dust when camels move
+            if (caravanPlaying && !caravanFinished && Math.random() > 0.6) {
+                dustParticles.push({
+                    x: camelX + 70,
+                    y: cHeight * 0.74,
+                    radius: Math.random() * 4 + 2,
+                    life: 0.8
+                });
+            }
+        }
+
+        function animateCamelScene() {
+            if (!ctx) return;
+            legSwing += 0.15;
+            drawCamelCaravan();
+            
+            if (caravanPlaying && !caravanFinished) {
+                camelX += 2.2;
+                if (camelX > cWidth + 200) {
+                    caravanFinished = true;
+                    caravanPlaying = false;
+                    document.body.style.overflow = "auto";
+                    lenis.scrollTo("#nextSection");
+                }
+            }
+            requestAnimationFrame(animateCamelScene);
+        }
+
+        ScrollTrigger.create({
+            trigger: ".camel-caravan-container",
+            start: "top center",
+            onEnter: () => {
+                if (caravanPlaying || caravanFinished) return;
+                caravanPlaying = true;
+                document.body.style.overflow = "hidden";
+                camelX = -150;
+                gsap.to(".camel-caravan-container", {
+                    scale: 1.02,
+                    duration: 3,
+                    ease: "power2.out",
+                    yoyo: false
+                });
+            }
+        });
+
+        window.addEventListener('resize', () => { resizeCamelCanvas(); });
+        resizeCamelCanvas();
+        animateCamelScene();
+
+        // Particles Background
+        const pCanvas = document.getElementById('particleCanvas');
+        const pCtx = pCanvas.getContext('2d');
+        let particles = [];
+        
+        function resizeParticles() { pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeParticles);
+        resizeParticles();
+        
+        for (let i = 0; i < 150; i++) {
+            particles.push({
+                x: Math.random() * pCanvas.width,
+                y: Math.random() * pCanvas.height,
+                radius: Math.random() * 2 + 0.5,
+                alpha: Math.random() * 0.5,
+                speedX: (Math.random() - 0.5) * 0.2,
+                speedY: (Math.random() - 0.5) * 0.1
+            });
+        }
+        
+        function drawParticles() {
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            pCtx.fillStyle = "#d4a94d";
+            particles.forEach(p => {
+                pCtx.globalAlpha = p.alpha * 0.6;
+                pCtx.beginPath();
+                pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                pCtx.fill();
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = pCanvas.width;
+                if (p.x > pCanvas.width) p.x = 0;
+                if (p.y < 0) p.y = pCanvas.height;
+                if (p.y > pCanvas.height) p.y = 0;
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // Mouse Glow
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.getElementById('mouseGlow');
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // Dua Slider
+        const duas = [
+            { arabic: "تَقَبَّلَ اللَّهُ مِنَّا وَمِنكُم", translit: "Taqabbal Allahu minna wa minkum", translation: "May Allah accept from us and from you. Eid Mubarak!" },
+            { arabic: "اللَّهُمَّ أَهْلِلْهُ عَلَيْنَا بِالْيُمْنِ وَالإِيمَانِ", translit: "Allahumma ahlilhu 'alayna bil-yumni wal-iman", translation: "O Allah, bring this moon upon us with blessings and faith." },
+            { arabic: "رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ", translit: "Rabbana taqabbal minna innaka Antas Samee'ul Aleem", translation: "Our Lord, accept from us. You are the All-Hearing, All-Knowing." }
+        ];
+        let duaIndex = 0;
+        function updateDua() {
+            document.getElementById('duaArabic').innerText = duas[duaIndex].arabic;
+            document.getElementById('duaTransliteration').innerText = duas[duaIndex].translit;
+            document.getElementById('duaTranslation').innerHTML = `✨ ${duas[duaIndex].translation} ✨`;
+        }
+        document.getElementById('nextDua').onclick = () => { duaIndex = (duaIndex + 1) % duas.length; updateDua(); };
+        document.getElementById('prevDua').onclick = () => { duaIndex = (duaIndex - 1 + duas.length) % duas.length; updateDua(); };
+        updateDua();
+
+        // Eid Card Generator
+        const genBtn = document.getElementById('generateCardBtn');
+        const cardDiv = document.getElementById('generatedCard');
+        const nameInput = document.getElementById('userName');
+        const customMsg = document.getElementById('customMessage');
+        const styleSelect = document.getElementById('cardStyle');
+        const cardNameSpan = document.getElementById('cardUserNameDisplay');
+        const cardMsgSpan = document.getElementById('cardMessageDisplay');
+
+       genBtn.addEventListener('click', () => {
+
+    let userName = nameInput.value.trim() || "Beloved Guest";
+
+    let message =
+        customMsg.value.trim() ||
+        "May Allah bless you with endless joy, sacrifice & mercy. Eid Mubarak! 🕋🐏✨";
+
+    cardNameSpan.innerText = userName;
+    cardMsgSpan.innerText = message;
+
+    let style = styleSelect.value;
+
+    if (style === 'emerald') {
+        cardDiv.style.background =
+            "linear-gradient(145deg, #103828, #051a0c)";
+    }
+
+    else if (style === 'ruby') {
+        cardDiv.style.background =
+            "linear-gradient(145deg, #3d1a1a, #1c0808)";
+    }
+
+    else {
+        cardDiv.style.background =
+            "linear-gradient(145deg, #1f1a10, #0b0802)";
+    }
+
+    // SHOW CARD
+    cardDiv.classList.remove('hidden');
+
+    // SWITCH STATES
+    document.getElementById("emptyCardState").classList.add("hidden");
+
+    document.getElementById("actualCardContent").classList.remove("hidden");
+
+    // Animation
+    gsap.fromTo(
+        "#actualCardContent",
+        {
+            opacity: 0,
+            y: 40,
+            scale: 0.9
+        },
+        {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.2,
+            ease: "power4.out"
+        }
+    );
+
+    // Lantern burst
+    for (let i = 0; i < 30; i++) {
+
+        let l = document.createElement('div');
+
+        l.innerHTML = '🏮';
+
+        l.style.cssText = `
+            position:fixed;
+            left:${Math.random() * 100}%;
+            top:-20px;
+            font-size:${Math.random() * 30 + 18}px;
+            opacity:0.9;
+            z-index:999;
+            transition:all 2s ease-out;
+            pointer-events:none;
+        `;
+
+        document.body.appendChild(l);
+
+        setTimeout(() => {
+
+            l.style.transform =
+                `translateY(${window.innerHeight + 100}px)
+                 rotate(${Math.random() * 40 - 20}deg)`;
+
+            l.style.opacity = '0';
+
+            setTimeout(() => l.remove(), 2000);
+
+        }, 10);
+    }
+});
+
+   document.getElementById('downloadCard')
+.addEventListener('click', async () => {
+
+    const card = document.getElementById('actualCardContent');
+
+    // wait for fonts
+    await document.fonts.ready;
+
+    try {
+
+        const canvas = await html2canvas(card, {
+            scale: 4,
+            useCORS: true,
+            backgroundColor: "#000000",
+            logging:false,
+            removeContainer:true
+        });
+
+        canvas.toBlob(async (blob) => {
+
+            const file = new File(
+                [blob],
+                "Eid_Mubarak_Card.png",
+                { type: "image/png" }
+            );
+
+            if (
+                navigator.canShare &&
+                navigator.canShare({ files: [file] })
+            ) {
+
+                await navigator.share({
+                    files: [file],
+                    title: "Eid Mubarak Card",
+                    text: "✨ Eid ul-Adha Mubarak ✨"
+                });
+
+            } else {
+
+                const link = document.createElement('a');
+
+                link.href = URL.createObjectURL(blob);
+
+                link.download = "Eid_Mubarak_Card.png";
+
+                link.click();
+            }
+
+        }, "image/png");
+
+    } catch (err) {
+
+        console.log(err);
+
+        alert("Image export failed");
+
+    }
+
+});
+
+        // Dynamic background
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+                document.body.style.background = `radial-gradient(circle at 30% ${self.progress * 100}%, #0a0702, #030101)`;
+            }
+        });
+    </script>
+</body>
+</html>
